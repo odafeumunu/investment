@@ -14,6 +14,7 @@ import Countdown from "@/components/Countdown";
 import { useSubmitPayment } from "@/lib/hooks/useWallet";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
+import { useRouter } from "next/router";
 
 type Props = {
   open: boolean;
@@ -38,6 +39,7 @@ export default function DepositDetailsDialog({
 }: Props) {
   const [txnRef, setTxnRef] = useState("");
   const submitPaymentMutation = useSubmitPayment();
+  const router = useRouter()
 
   const handleSubmitPayment = () => {
     submitPaymentMutation.mutate(
@@ -49,6 +51,7 @@ export default function DepositDetailsDialog({
         onSuccess: (data) => {
           toast.success(data.message || "Payment submitted successfully.");
           onOpenChange(false);
+          router.push("/deposit/history")
         },
         onError: (err: unknown) => {
           let msg = "Failed to submit payment.";
