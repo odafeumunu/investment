@@ -39,7 +39,7 @@ export default function WithdrawalPage() {
   const [accountName, setAccountName] = useState("");
 
   if (!investment) {
-    return 
+    return;
   }
 
   const available = Number(investment.available_earnings);
