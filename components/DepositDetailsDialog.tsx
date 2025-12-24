@@ -14,7 +14,7 @@ import Countdown from "@/components/Countdown";
 import { useSubmitPayment } from "@/lib/hooks/useWallet";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 type Props = {
   open: boolean;

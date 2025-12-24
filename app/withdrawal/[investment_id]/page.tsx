@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { HeaderBar } from "@/components/HeaderBar";
+import axios from "axios";
 import {
   Select,
   SelectContent,
@@ -83,8 +84,12 @@ export default function WithdrawalPage() {
       onSuccess: () => {
         toast.success("Withdrawal request submitted successfully.");
       },
-      onError: (err: any) => {
-        toast.error(err?.detail || "An error occurred.");
+      onError: (error: Error) => {
+        if (axios.isAxiosError(error)) {
+          toast.error(error.response?.data?.detail || "An error occurred.");
+        } else {
+          toast.error(error.message || "An error occurred.");
+        }
       },
     });
   };

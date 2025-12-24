@@ -5,7 +5,7 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import BottomNav from "@/components/ButtonNav";
 import InvestmentCard from "@/components/investments/InvestmentCard";
 import { HeaderBar } from "@/components/HeaderBar";
-import { ActiveInvestmentsTable } from "@/components/investments/ActiveInvestments";
+import { ActiveInvestmentsCards } from "@/components/investments/ActiveInvestments";
 import { InvestmentHistoryTable } from "@/components/investments/HistoryInvestment";
 import { InvestmentStatsTable } from "@/components/investments/InvestmentStats";
 import ScrollToHash from "@/components/ScrollToHash";
@@ -31,7 +31,7 @@ export default function InvestmentPage() {
 
         {/* Active Investments Section */}
         <div id="activePlan">
-          <ActiveInvestmentsTable />
+          <ActiveInvestmentsCards />
         </div>
 
         {/* Investment Stats Section */}

@@ -1,116 +1,77 @@
 "use client";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   useActiveInvestments,
   InvestmentDetails,
 } from "@/lib/hooks/useInvestment";
-import { formatCurrency, formatDate } from "@/lib/utils/formatCurrency";
+import { formatCurrency } from "@/lib/utils/formatCurrency";
 
-export function ActiveInvestmentsTable() {
+
+export function ActiveInvestmentsCards() {
   const { data: activeInvestments } = useActiveInvestments();
+
+  if (!activeInvestments?.active_investments.length) {
+    return (
+      <div className="rounded-xl border bg-card p-6 text-center text-muted-foreground">
+        No active investments found
+      </div>
+    );
+  }
 
   return (
     <div className="mb-8 rounded-xl border bg-card p-5">
       <h2 className="text-lg mb-4">Active Investments</h2>
 
-      <div className="w-full overflow-x-auto rounded-xl border bg-card shadow-sm">
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-emerald-50">
-              <TableHead className="text-xs">Plan</TableHead>
-              <TableHead className="text-xs">Level</TableHead>
-              <TableHead className="text-xs">Invested</TableHead>
-              <TableHead className="text-xs">Video Earnings</TableHead>
-              <TableHead className="text-xs">Referral Earnings</TableHead>
-              <TableHead className="text-xs">Total Earnings</TableHead>
-              <TableHead className="text-xs">Available Earnings</TableHead>
-              <TableHead className="text-xs">Status</TableHead>
-              <TableHead className="text-xs">Start Date</TableHead>
-              <TableHead className="text-xs">End Date</TableHead>
-              <TableHead className="text-xs">Capital Unlock (days)</TableHead>
-              <TableHead className="text-xs">Earnings Unlock (days)</TableHead>
-              <TableHead className="text-center">...</TableHead>
-            </TableRow>
-          </TableHeader>
+      <div className="">
+        {activeInvestments.active_investments.map((inv: InvestmentDetails) => (
+          <Card key={inv.id} className="flex flex-col">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-sm capitalize">
+                  {inv.plan_name} — {inv.plan_level}
+                </CardTitle>
+                <Badge variant="secondary" className="capitalize">
+                  {inv.status}
+                </Badge>
+              </div>
+            </CardHeader>
 
-          <TableBody>
-            {activeInvestments?.active_investments.length === 0 && (
-              <TableRow>
-                <TableCell
-                  colSpan={13}
-                  className="py-6 text-center text-muted-foreground">
-                  No active investments found
-                </TableCell>
-              </TableRow>
-            )}
+            <CardContent className="space-y-2 text-xs">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Invested</span>
+                <span>{formatCurrency(inv.amount_invested, "GHC")}</span>
+              </div>
 
-            {activeInvestments?.active_investments.map(
-              (inv: InvestmentDetails) => (
-                <TableRow key={inv.id} className="hover:bg-muted/40">
-                  <TableCell className="capitalize text-xs">
-                    {inv.plan_name}
-                  </TableCell>
+              <div className="flex justify-between font-medium">
+                <span className="text-muted-foreground">Available</span>
+                <span className="text-emerald-600">
+                  {formatCurrency(inv.available_earnings, "GHC")}
+                </span>
+              </div>
 
-                  <TableCell className="capitalize text-xs">{inv.plan_level}</TableCell>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Total Earnings</span>
+                <span>{formatCurrency(inv.total_earnings, "GHC")}</span>
+              </div>
+            </CardContent>
 
-                  <TableCell className="capitalize text-xs">
-                    {formatCurrency(inv.amount_invested, "GHC")}
-                  </TableCell>
-
-                  <TableCell className="capitalize text-xs">
-                    {formatCurrency(inv.video_earnings, "GHC")}
-                  </TableCell>
-
-                  <TableCell className="capitalize text-xs">
-                    {formatCurrency(inv.referral_earnings, "GHC")}
-                  </TableCell>
-
-                  <TableCell className="capitalize text-xs">
-                    {formatCurrency(inv.total_earnings, "GHC")}
-                  </TableCell>
-
-                  <TableCell className="capitalize text-xs">
-                    {formatCurrency(inv.available_earnings, "GHC")}
-                  </TableCell>
-
-                  <TableCell className="capitalize text-xs">{inv.status}</TableCell>
-
-                  <TableCell className="capitalize text-xs">
-                    {formatDate(inv.start_date)}
-                  </TableCell>
-
-                  <TableCell className="capitalize text-xs">
-                    {formatDate(inv.end_date)}
-                  </TableCell>
-
-                  <TableCell className="capitalize text-xs">
-                    {inv.days_until_capital_unlock}
-                  </TableCell>
-
-                  <TableCell className="capitalize text-xs">
-                    {inv.days_until_earnings_unlock}
-                  </TableCell>
-
-                  <TableCell className="text-right">
-                    <Link href={`/withdrawal/${inv.investment_id}`}
-                      className="capitalize text-xs bg-emerald-600 text-white py-1 px-3 rounded-lg">
-                      Withdraw
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              )
-            )}
-          </TableBody>
-        </Table>
+            <CardFooter className="mt-auto">
+              <Button asChild className="w-full bg-emerald-600">
+                <Link href={`/withdrawal/${inv.investment_id}`}>Withdraw</Link>
+              </Button>
+            </CardFooter>
+          </Card>
+        ))}
       </div>
     </div>
   );

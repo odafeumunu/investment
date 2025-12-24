@@ -7,7 +7,7 @@ export interface AvailableVideo {
   category_name: string;
   duration_seconds: number;
   earnings_amount: string;
-  has_watched: string; // or boolean depending on backend
+  has_watched: string; 
 }
 
 export interface VideoCategory {
