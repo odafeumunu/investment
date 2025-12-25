@@ -74,8 +74,8 @@ export function VideoPlayer({ video }: { video: AvailableVideo }) {
         </video>
 
         {sent && (
-          <div className="absolute inset-0 flex items-center justify-center bg-[rgba(0,0,0,0.5)]">
-            <p className="text-white text-sm font-semibold">
+          <div className="absolute inset-0 flex items-center justify-center bg-[rgba(0,0,0,0.6)]">
+            <p className="text-white text-center text-sm font-semibold">
               Earnings credited!
             </p>
           </div>
