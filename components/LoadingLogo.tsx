@@ -10,10 +10,10 @@ export default function LoadingLogo({
   className?: string;
 }) {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-slate-900">
+    <div className="flex items-center justify-center min-h-screen">
       <div className={`animate-spin ${className}`}>
         <Image
-          src="/logo_new.jpg"
+          src="/logo.png"
           alt="Loading Logo"
           width={size}
           height={size}

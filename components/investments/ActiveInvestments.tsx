@@ -22,7 +22,7 @@ export function ActiveInvestmentsCards() {
 
   if (!activeInvestments?.active_investments.length) {
     return (
-      <div className="rounded-xl border bg-card p-6 text-center text-muted-foreground">
+      <div className="rounded-xl border bg-card p-6 text-center text-muted-foreground mb-5">
         No active investments found
       </div>
     );

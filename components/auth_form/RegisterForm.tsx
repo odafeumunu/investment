@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearchParams } from "next/navigation";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 import { EyeOff, Eye, Smartphone, Lock, User } from "lucide-react";
@@ -48,6 +49,10 @@ export default function RegisterForm({
   onSubmit: (data: FormSchemaType, form: UseFormReturn<FormSchemaType>) => void;
   isLoading?: boolean;
 }) {
+
+  const searchParams = useSearchParams();
+  const refCodeFromUrl = searchParams.get("ref") || "";
+
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,7 +60,7 @@ export default function RegisterForm({
       phone_number: "",
       password: "",
       password_confirm: "",
-      referral_code: "",
+      referral_code: refCodeFromUrl,
     },
   });
 
@@ -70,13 +75,14 @@ export default function RegisterForm({
           className="mt-10">
           <div className="flex flex-col items-center gap-3 justify-center mb-5">
             <Image
-              src="/logo_new.jpg"
+              src="/logo.png"
               alt="My App Logo"
-              width={70}
-              height={70}
+              width={85}
+              height={85}
+              className="shadow-sm"
               priority
             />
-            <h2 className="text-center text-2xl font-semibold">Register</h2>
+            <h2 className="text-center text-2xl font-semibold">Sign Up</h2>
           </div>
 
           {/* USERNAME */}
@@ -216,7 +222,11 @@ export default function RegisterForm({
                 <FormItem>
                   <FormLabel>Referral Code</FormLabel>
                   <FormControl>
-                    <Input placeholder="Referral Code (optional)" {...field} />
+                    <Input
+                      {...field}
+                      placeholder="Referral Code (optional)"
+                      readOnly={!!refCodeFromUrl}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

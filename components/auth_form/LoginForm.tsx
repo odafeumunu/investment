@@ -56,13 +56,14 @@ export default function LoginForm({
           className="mt-10">
           <div className="flex flex-col items-center gap-3 justify-center mb-5">
             <Image
-              src="/logo_new.jpg"
+              src="/logo.png"
               alt="My App Logo"
-              width={70}
-              height={70}
+              width={85}
+              height={85}
+              className="shadow-sm"
               priority
             />
-            <h2 className="text-center text-2xl font-semibold">Login</h2>
+            <h2 className="text-center text-2xl font-semibold">Sign In</h2>
           </div>
 
           {/* PHONE NUMBER */}
