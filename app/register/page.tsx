@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -11,12 +13,10 @@ import { UseFormReturn } from "react-hook-form";
 
 export default function RegisterPage() {
   const router = useRouter();
-
-  // ✅ useRef to store form instance safely
   const formRef = useRef<UseFormReturn<RegisterPayload> | null>(null);
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: RegisterPayload) => registerUser(data),
+    mutationFn: registerUser,
     onSuccess: () => {
       toast.success("Registration successful!");
       router.push("/signin");
@@ -36,7 +36,6 @@ export default function RegisterPage() {
     },
   });
 
-  // This only passes the **form instance** to our ref before calling mutate
   const handleSubmit = (
     values: RegisterPayload,
     form: UseFormReturn<RegisterPayload>
