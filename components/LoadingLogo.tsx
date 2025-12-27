@@ -3,14 +3,14 @@
 import Image from "next/image";
 
 export default function LoadingLogo({
-  size = 70,
+  size = 85,
   className = "",
 }: {
   size?: number;
   className?: string;
 }) {
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center min-h-screen bg-slate-900">
       <div className={`animate-spin ${className}`}>
         <Image
           src="/logo_new.jpg"

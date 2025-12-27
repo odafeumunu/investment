@@ -9,12 +9,6 @@ import {
   Copy,
   ArrowDownCircle,
   ArrowUpCircle,
-  ChevronRight,
-  Settings,
-  FileText,
-  Gift,
-  MessageCircle,
-  Download,
   LogOut,
 } from "lucide-react";
 
@@ -141,7 +135,7 @@ export default function UserProfile() {
               </Button>
             </Link>
 
-            <Link href="/withdrawal">
+            <Link href="/investments#activePlan">
               <Button className="flex items-center gap-2">
                 <ArrowUpCircle className="w-4 h-4" />
                 Withdrawal
@@ -216,7 +210,10 @@ export default function UserProfile() {
         {/* Quick Links & Logout */}
         <div className="bg-white shadow rounded-lg divide-y">
           <div className="px-4 py-3 flex justify-between">
-            <Button className="bg-red-500 hover:bg-red-700" size="sm" onClick={logout}>
+            <Button
+              className="bg-red-500 hover:bg-red-700"
+              size="sm"
+              onClick={logout}>
               <LogOut />
               Logout
             </Button>
