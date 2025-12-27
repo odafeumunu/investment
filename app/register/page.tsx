@@ -1,22 +1,21 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { registerUser, RegisterPayload } from "@/lib/api/register";
 import RegisterForm from "@/components/auth_form/RegisterForm";
 import { AxiosError } from "axios";
-import { useRef } from "react";
+import { useRef, Suspense } from "react";
 import { UseFormReturn } from "react-hook-form";
 
 export default function RegisterPage() {
   const router = useRouter();
+
   const formRef = useRef<UseFormReturn<RegisterPayload> | null>(null);
 
   const { mutate, isPending } = useMutation({
-    mutationFn: registerUser,
+    mutationFn: (data: RegisterPayload) => registerUser(data),
     onSuccess: () => {
       toast.success("Registration successful!");
       router.push("/signin");
@@ -44,5 +43,9 @@ export default function RegisterPage() {
     mutate(values);
   };
 
-  return <RegisterForm onSubmit={handleSubmit} isLoading={isPending} />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RegisterForm onSubmit={handleSubmit} isLoading={isPending} />
+    </Suspense>
+  );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
 import { useForm, UseFormReturn } from "react-hook-form";
@@ -42,14 +42,14 @@ const formSchema = z
 
 type FormSchemaType = z.infer<typeof formSchema>;
 
-export default function RegisterForm({
+// Inner component that uses useSearchParams
+function RegisterFormContent({
   onSubmit,
   isLoading,
 }: {
   onSubmit: (data: FormSchemaType, form: UseFormReturn<FormSchemaType>) => void;
   isLoading?: boolean;
 }) {
-
   const searchParams = useSearchParams();
   const refCodeFromUrl = searchParams.get("ref") || "";
 
@@ -66,7 +66,7 @@ export default function RegisterForm({
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  
+
   return (
     <div className="container">
       <Form {...form}>
@@ -248,5 +248,21 @@ export default function RegisterForm({
         </form>
       </Form>
     </div>
+  );
+}
+
+// Main export component wrapped with Suspense
+export default function RegisterForm({
+  onSubmit,
+  isLoading,
+}: {
+  onSubmit: (data: FormSchemaType, form: UseFormReturn<FormSchemaType>) => void;
+  isLoading?: boolean;
+}) {
+  return (
+    <Suspense
+      fallback={<div className="container mt-10 text-center">Loading...</div>}>
+      <RegisterFormContent onSubmit={onSubmit} isLoading={isLoading} />
+    </Suspense>
   );
 }

@@ -20,9 +20,7 @@ export function ReferralLinkCard({
     const ok = await copyToClipboard(referralLink);
 
     if (ok) {
-      toast.success("Copied!", {
-        description: referralLink,
-      });
+      toast.success("Referral Link Copied!");
     } else {
       toast.error("Failed to copy");
     }
