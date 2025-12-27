@@ -70,7 +70,7 @@ export default function RegisterForm({
           className="mt-10">
           <div className="flex flex-col items-center gap-3 justify-center mb-5">
             <Image
-              src="/logo.jpg"
+              src="/logo_new.jpg"
               alt="My App Logo"
               width={70}
               height={70}

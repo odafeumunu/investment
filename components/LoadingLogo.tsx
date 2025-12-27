@@ -13,7 +13,7 @@ export default function LoadingLogo({
     <div className="flex items-center justify-center min-h-screen">
       <div className={`animate-spin ${className}`}>
         <Image
-          src="/logo.jpg"
+          src="/logo_new.jpg"
           alt="Loading Logo"
           width={size}
           height={size}
